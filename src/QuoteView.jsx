@@ -39,10 +39,10 @@ export default class QuoteView extends Component {
     const newQuote = quotes[index];
     const tweetURL = `https://twitter.com/intent/tweet/?text="${
       newQuote && newQuote.text
-    }" 
-
-
-    -${newQuote && newQuote.author}`;
+    }"         -${newQuote && newQuote.author}`;
+    const tweetURLNoAuthor = `https://twitter.com/intent/tweet/?text="${
+      newQuote && newQuote.text
+    }"         -Anonymous`;
 
     return (
       <div>
@@ -110,17 +110,31 @@ export default class QuoteView extends Component {
               >
                 Get Quote
               </Button>
-              <a
-                title='Tweet this quote!'
-                id='tweet-quote'
-                rel='noreferrer'
-                target='_blank'
-                href={tweetURL}
-                className='btn btn-primary'
-                style={{ backgroundColor: this.state.bgColor }}
-              >
-                <i className='fa fa-twitter'></i> Tweet
-              </a>
+              {newQuote && newQuote.author === null ? (
+                <a
+                  title='Tweet this quote!'
+                  id='tweet-quote'
+                  rel='noreferrer'
+                  target='_blank'
+                  href={tweetURLNoAuthor}
+                  className='btn btn-primary'
+                  style={{ backgroundColor: this.state.bgColor }}
+                >
+                  <i className='fa fa-twitter'></i> Tweet
+                </a>
+              ) : (
+                <a
+                  title='Tweet this quote!'
+                  id='tweet-quote'
+                  rel='noreferrer'
+                  target='_blank'
+                  href={tweetURL}
+                  className='btn btn-primary'
+                  style={{ backgroundColor: this.state.bgColor }}
+                >
+                  <i className='fa fa-twitter'></i> Tweet
+                </a>
+              )}
             </Card.Body>
           </Card>
         </div>
