@@ -39,10 +39,12 @@ export default class QuoteView extends Component {
     const newQuote = quotes[index];
     const tweetURL = `https://twitter.com/intent/tweet/?text="${
       newQuote && newQuote.text
-    }"         -${newQuote && newQuote.author}`;
+    }"
+    -${newQuote && newQuote.author}`;
     const tweetURLNoAuthor = `https://twitter.com/intent/tweet/?text="${
       newQuote && newQuote.text
-    }"         -Anonymous`;
+    }"
+    -Anonymous`;
 
     return (
       <div>
@@ -82,7 +84,7 @@ export default class QuoteView extends Component {
                           className='d-block text-right'
                           style={{ color: this.state.bgColor }}
                         >
-                          - Anonymous
+                          -Anonymous
                         </cite>
                       </div>
                     ) : (
