@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import randomColor from 'randomcolor';
@@ -17,6 +17,9 @@ export default class QuoteView extends Component {
     axios.get('https://type.fit/api/quotes').then((response) => {
       this.setState({ quotes: response.data }, this.getRandomIndex);
     });
+    if (AxiosError) {
+      alert('So sorry, it looks like there is a problem with the server');
+    }
   }
 
   getRandomIndex = () => {
@@ -25,6 +28,7 @@ export default class QuoteView extends Component {
       const index = Math.floor(Math.random() * quotes.length);
       this.setState({ index });
     }
+    alert('So sorry, it looks like there is a problem with the server');
   };
 
   colorChange = (e) => {
@@ -41,6 +45,7 @@ export default class QuoteView extends Component {
       newQuote && newQuote.text
     }"
     -${newQuote && newQuote.author}`;
+
     const tweetURLNoAuthor = `https://twitter.com/intent/tweet/?text="${
       newQuote && newQuote.text
     }"
