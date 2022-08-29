@@ -6,8 +6,8 @@
   margin-top:1em;
   color:white;
   border: white solid 1px;
-  border-radius:50%;
-  padding: .7em;
+  border-radius:2em;
+  padding: .3em;
   
   
 }
@@ -71,5 +71,9 @@ cite {
 }
 
 #new-quote {
+  border-radius:2em;
   float: right;
+}
+#tweet-quote{
+  border-radius:2em;
 }
