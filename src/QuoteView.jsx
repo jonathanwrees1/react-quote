@@ -69,10 +69,10 @@ export default class QuoteView extends Component {
           rel='stylesheet'
           href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'
         />
-        <Container>
+        <Container className='col-md-7 col-10'>
           <Row>
             <Col>
-              <h1 className='heading d-flex justify-content-center display-3 '>
+              <h1 className='heading d-flex justify-content-center display-3 text-center '>
                 Random Quote Generator
               </h1>
             </Col>

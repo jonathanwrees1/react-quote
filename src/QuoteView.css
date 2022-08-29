@@ -5,11 +5,14 @@
 .heading{
   margin-top:1em;
   color:white;
+  border: white solid 1px;
+  border-radius:50%;
+  padding: .7em;
   
   
 }
 .quote-container{
-  margin-top: 10em;
+  margin-top: 7em;
 }
 #quote-info-wrapper {
   background-color: white;
