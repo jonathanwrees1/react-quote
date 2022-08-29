@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import axios, { AxiosError } from 'axios';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+import axios from 'axios';
+
+import { Row, Col, Container, Card, Button } from 'react-bootstrap';
 import randomColor from 'randomcolor';
 
 import './QuoteView.css';
@@ -14,12 +14,19 @@ export default class QuoteView extends Component {
   };
 
   componentDidMount() {
-    axios.get('https://type.fit/api/quotes').then((response) => {
-      this.setState({ quotes: response.data }, this.getRandomIndex);
-    });
-    if (AxiosError) {
-      alert('So sorry, it looks like there is a problem with the server');
-    }
+    axios
+      .get('https://type.fit/api/quotes')
+      .then((response) => {
+        this.setState({ quotes: response.data }, this.getRandomIndex);
+      })
+      .catch((err) => {
+        this.setState(
+          {
+            err,
+          },
+          this.errorMessage
+        );
+      });
   }
 
   getRandomIndex = () => {
@@ -27,8 +34,13 @@ export default class QuoteView extends Component {
     if (quotes.length > 0) {
       const index = Math.floor(Math.random() * quotes.length);
       this.setState({ index });
+    } else {
+      this.setState(this.errorMessage);
     }
-    alert('So sorry, it looks like there is a problem with the server');
+  };
+
+  errorMessage = () => {
+    alert('Hmm....something is wrong with the server');
   };
 
   colorChange = (e) => {
@@ -52,99 +64,113 @@ export default class QuoteView extends Component {
     -Anonymous`;
 
     return (
-      <div>
+      <div style={{ backgroundColor: this.state.bgColor }}>
         <link
           rel='stylesheet'
           href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'
         />
-        <div id='wrapper' style={{ backgroundColor: this.state.bgColor }}>
-          <Card className='card' id='quote-box'>
-            <Card.Body className='card-body'>
-              <div id='quote-info-wrapper'>
-                {newQuote && ( //short circuit operator to check if a quote is present before executing any more code
-                  <>
-                    <div id='quote-text'>
-                      <i
-                        className='fa fa-quote-left'
-                        style={{ color: this.state.bgColor }}
-                      ></i>
-                      &nbsp;
-                      <span
-                        id='text'
-                        className='card-title'
-                        style={{ color: this.state.bgColor }}
-                      >
-                        {newQuote.text}&nbsp;
-                      </span>
-                      <i
-                        className='fa fa-quote-right'
-                        style={{ color: this.state.bgColor }}
-                      ></i>
-                    </div>
+        <Container>
+          <Row>
+            <Col>
+              <h1 className='heading d-flex justify-content-center display-3 '>
+                Random Quote Generator
+              </h1>
+            </Col>
+          </Row>
+        </Container>
 
-                    {newQuote && newQuote.author === null ? ( //ternary operator checking if author exist or not
-                      <div id='quote-author'>
-                        <cite
-                          id='author'
-                          className='d-block text-right'
-                          style={{ color: this.state.bgColor }}
-                        >
-                          -Anonymous
-                        </cite>
-                      </div>
-                    ) : (
-                      <div id='quote-author'>
-                        <cite
-                          id='author'
-                          className='d-block text-right'
-                          style={{ color: this.state.bgColor }}
-                        >
-                          -{newQuote.author}
-                        </cite>
-                      </div>
+        <Container className='quote-container vh-100 d-flex justify-content-center col-xl-4 col-lg-5 col-md-7 col-10'>
+          <Row>
+            <Col>
+              <Card className='card' id='quote-box'>
+                <Card.Body className='card-body'>
+                  <div id='quote-info-wrapper'>
+                    {newQuote && ( //short circuit operator to check if a quote is present before executing any more code
+                      <>
+                        <div id='quote-text'>
+                          <i
+                            className='fa fa-quote-left'
+                            style={{ color: this.state.bgColor }}
+                          ></i>
+                          &nbsp;
+                          <span
+                            id='text'
+                            className='card-title'
+                            style={{ color: this.state.bgColor }}
+                          >
+                            {newQuote.text}&nbsp;
+                          </span>
+                          <i
+                            className='fa fa-quote-right'
+                            style={{ color: this.state.bgColor }}
+                          ></i>
+                        </div>
+
+                        {newQuote && newQuote.author === null ? ( //ternary operator checking if author exist or not
+                          <div id='quote-author'>
+                            <cite
+                              id='author'
+                              className='d-block text-right'
+                              style={{ color: this.state.bgColor }}
+                            >
+                              -Anonymous
+                            </cite>
+                          </div>
+                        ) : (
+                          <div id='quote-author'>
+                            <cite
+                              id='author'
+                              className='d-block text-right'
+                              style={{ color: this.state.bgColor }}
+                            >
+                              -{newQuote.author}
+                            </cite>
+                          </div>
+                        )}
+                      </>
                     )}
-                  </>
-                )}
-              </div>
-              <Button
-                id='new-quote'
-                className='btn btn-primary'
-                onClick={() => {
-                  this.getRandomIndex();
-                  this.colorChange();
-                }}
-                style={{ backgroundColor: this.state.bgColor }}
-              >
-                Get Quote
-              </Button>
-              {newQuote && newQuote.author === null ? (
-                <a
-                  title='Tweet this quote!'
-                  id='tweet-quote'
-                  rel='noreferrer'
-                  target='_blank'
-                  href={tweetURLNoAuthor}
-                  className='btn btn-primary'
-                  style={{ backgroundColor: this.state.bgColor }}
-                >
-                  <i className='fa fa-twitter'></i> Tweet
-                </a>
-              ) : (
-                <a
-                  title='Tweet this quote!'
-                  id='tweet-quote'
-                  rel='noreferrer'
-                  target='_blank'
-                  href={tweetURL}
-                  className='btn btn-primary'
-                  style={{ backgroundColor: this.state.bgColor }}
-                >
-                  <i className='fa fa-twitter'></i> Tweet
-                </a>
-              )}
-            </Card.Body>
-          </Card>
-        </div>
+                  </div>
+                  <Button
+                    id='new-quote'
+                    className='btn btn-primary'
+                    onClick={() => {
+                      this.getRandomIndex();
+                      this.colorChange();
+                    }}
+                    style={{ backgroundColor: this.state.bgColor }}
+                  >
+                    Get Quote
+                  </Button>
+                  {newQuote && newQuote.author === null ? (
+                    <a
+                      title='Tweet this quote!'
+                      id='tweet-quote'
+                      rel='noreferrer'
+                      target='_blank'
+                      href={tweetURLNoAuthor}
+                      className='btn btn-primary'
+                      style={{ backgroundColor: this.state.bgColor }}
+                    >
+                      <i className='fa fa-twitter'></i> Tweet
+                    </a>
+                  ) : (
+                    <a
+                      title='Tweet this quote!'
+                      id='tweet-quote'
+                      rel='noreferrer'
+                      target='_blank'
+                      href={tweetURL}
+                      className='btn btn-primary'
+                      style={{ backgroundColor: this.state.bgColor }}
+                    >
+                      <i className='fa fa-twitter'></i> Tweet
+                    </a>
+                  )}
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
       </div>
     );
   }
