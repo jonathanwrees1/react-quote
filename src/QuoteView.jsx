@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import { Row, Col, Container, Card, Button } from 'react-bootstrap';
-import randomColor from 'randomcolor';
 
 import './QuoteView.css';
 
@@ -43,10 +42,39 @@ export default class QuoteView extends Component {
     alert('Hmm....something is wrong with the server');
   };
 
-  colorChange = (e) => {
-    let color = randomColor();
+  colorChange = () => {
+    let color = [
+      'rgb(221, 22, 115)',
+      'rgb(219, 92, 153)',
+      'rgb(153, 24, 56)',
+      'rgb(36, 36, 209)',
+      'rgb(216,151,91)',
+      'rgb(249,134,136)',
+      'rgb(169,145,255)',
+      'rgb(74,71,211)',
+      'rgb(237,144,101)',
+      'rgb(13,147,125)',
+      'rgb(224,13,161)',
+      'rgb(191,59,87)',
+      'rgb(56,165,13)',
+      'rgb(2,114,209)',
+      'rgb(143,181,41)',
+      'rgb(209,6,188)',
+      'rgb(67,12,135)',
+      'rgb(201,63,56)',
+      'rgb(121,137,242)',
+      'rgb(12,137,110)',
+      'rgb(216,132,101)',
+      'rgb(54,159,170)',
+      'rgb(2,21,109)',
+      'rgb(4,112,15)',
+      'rgb(59,88,155)',
+      'rgb(193,21,75)',
+      'black',
+    ];
+    let randomColor = color[Math.floor(Math.random() * color.length)];
     this.setState({
-      bgColor: color,
+      bgColor: randomColor,
     });
   };
 
@@ -64,7 +92,11 @@ export default class QuoteView extends Component {
     -Anonymous`;
 
     return (
-      <div style={{ backgroundColor: this.state.bgColor }}>
+      <div
+        style={{
+          background: `linear-gradient(45deg,#cfd1d1,${this.state.bgColor},${this.state.bgColor},#cfd1d1)`,
+        }}
+      >
         <link
           rel='stylesheet'
           href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'

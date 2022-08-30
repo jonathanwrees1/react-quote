@@ -1,6 +1,8 @@
 * {
   box-sizing: border-box;
+  background-image: linear-gradient(inherit, transparent)
 }
+
 
 .heading{
   margin-top:1em;
